@@ -2,7 +2,9 @@ import numpy as np
 
 # faces = ['front', 'back', 'right', 'left', 'upper', 'down']
 # numpy = [  0,        1,      2,       3  ,   4  ,       5]
+#colors = ["green", "blue", "red", "orange", "white", "yellow"]
 
+# see https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
 class rubic():
     def __init__(self, size=3):
 
@@ -13,7 +15,7 @@ class rubic():
 
         self.slice = np.array([i for i in range(self.size)])
         self.zero = np.zeros(self.size, dtype='uint8')
-        self.last = np.ones(self.size, dtype='uint8') * -1
+        self.last = np.ones(self.size, dtype='uint8') * (-1)
         # print(self.cub)
 
         self.fb = [self._face_([2,5,3,4]),
@@ -74,23 +76,78 @@ class rubic():
             self.cub[front] = np.rot90(self.cub[front], k=1)
             self.cub[tuple(a)] = self.cub[tuple(b)]
 
-
     def F(self):
         self._rot90(0, self.fb, self.fa)
+    def Fs(self):
+        self._rot90(0, self.fb, self.fa, False)
+    def B(self):
+        self._rot90(1, self.bb, self.ba)
+    def Bs(self):
+        self._rot90(1, self.bb, self.ba, False)
     def R(self):
         self._rot90(2, self.rb, self.ra)
     def Rs(self):
         self._rot90(2, self.rb, self.ra, False)
-    def Fs(self):
-        self._rot90(0, self.fb, self.fa, False)
     def L(self):
         self._rot90(3, self.lb, self.la)
     def Ls(self):
         self._rot90(3, self.lb, self.la, False)
+    def U(self):
+        self._rot90(4, self.ub, self.ua)
+    def Us(self):
+        self._rot90(4, self.ub, self.ua, False)
+    def D(self):
+        self._rot90(5, self.db, self.da)
+    def Ds(self):
+        self._rot90(5, self.db, self.da, False)
+    def F2(self):
+        self.F()
+        self.F()
+    def B2(self):
+        self.B()
+        self.B()
+    def R2(self):
+        self.R()
+        self.R()
+    def L2(self):
+        self.L()
+        self.L()
+    def U2(self):
+        self.U()
+        self.U()
+    def D2(self):
+        self.D()
+        self.D()
+    def mix(self, iter=100):
+        comands = [self.F, self.D, self.B, self.R, self.L, self.U,
+                   self.F2, self.D2, self.B2, self.R2, self.L2, self.U2,
+                   self.Fs, self.Ds, self.Bs, self.Rs,self.Ls, self.Us]
+        for i in range(iter):
+            comands[np.random.randint(0, len(comands))]()
+
+    def rotate_by_name(self, name):
+        comands = {"F":self.F, "D":self.D,     "B":self.B,  "R":self.R,    "L":self.L, "U":self.U,
+                   "F2":self.F2, "D2":self.D2, "B2":self.B2, "R2":self.R2, "L2":self.L2, "U2":self.U2,
+                   "F'":self.Fs, "D'":self.Ds, "B'":self.Bs, "R'":self.Rs, "L'":self.Ls, "U'":self.Us}
+        f = comands.get(name)
+        if f != None:
+            f()
+
+    def reset(self):
+        self.cub = np.zeros((6, self.size, self.size), dtype='uint8')
+        self.size = self.size
+        for i, c in enumerate(self.cub):
+            c += i
+
+
+
+
 
 if __name__ == "__main__":
     r = rubic()
-    r.Ls()
+    # r.mix()
+    # print(r.cub)
+    r.rotate_by_name('F')
     print(r.cub)
     # x = np.array([[0, 1, 2],[3, 4, 5],[6, 7, 8],[9, 10, 11]])
     # rows = np.array([[0, 0],[3, 3]], dtype=np.intp)
