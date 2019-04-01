@@ -132,6 +132,7 @@ class rubic():
         f = comands.get(name)
         if f != None:
             f()
+        else:print("FATAL BADNAME FOR ROTATION")
 
     def reset(self):
         self.cub = np.zeros((6, self.size, self.size), dtype='uint8')
@@ -142,13 +143,16 @@ class rubic():
 
 
 
-
 if __name__ == "__main__":
     r = rubic()
     # r.mix()
     # print(r.cub)
     r.rotate_by_name('F')
-    print(r.cub)
+    r.rotate_by_name("D'")
+    r.rotate_by_name("L")
+    r.rotate_by_name("D'")
+    r.rotate_by_name("R'")
+
     # x = np.array([[0, 1, 2],[3, 4, 5],[6, 7, 8],[9, 10, 11]])
     # rows = np.array([[0, 0],[3, 3]], dtype=np.intp)
     # columns = np.array([[0, 2],[0, 2]], dtype=np.intp)

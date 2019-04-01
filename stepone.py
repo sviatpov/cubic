@@ -26,27 +26,38 @@ class stepone():
     #             self.changeSide(cubCurrent, solveMoveList, face)
 
     def solver(self, cub, mvmain):
-        if edges_corners_checker(self.origin, cub, 4, 0):
+        if not edges_corners_checker(self.origin.cub, cub.cub, 4, 0):
             self.rotate(cub, mvmain, 4, 0, 0)
-        if edges_corners_checker(self.origin, cub, 4, 1):
+        if not edges_corners_checker(self.origin.cub, cub.cub, 4, 1):
             self.rotate(cub, mvmain, 4, 1, 1)
-        if edges_corners_checker(self.origin, cub, 4, 2):
+        if not edges_corners_checker(self.origin.cub, cub.cub, 4, 2):
             self.rotate(cub, mvmain, 4, 2, 2)
-        if edges_corners_checker(self.origin, cub, 4, 3):
+        if not edges_corners_checker(self.origin.cub, cub.cub, 4, 3):
             self.rotate(cub, mvmain, 4, 3, 3)
 
     def rotate(self, cub, mvmain, col1, col2, face):
-        self.mvcurent = edges(cub, col1, col2)
-        self.mvorig = edges(self.origin, col1, col2)
+        self.mvcurent = edges(cub.cub, col1, col2)
+        self.mvorig = edges(self.origin.cub, col1, col2)
         if face != self.mvcurent[0] and face != self.mvcurent[3]:
-            self.mvdown2()
+            self.mvdown2(cub, mvmain, col1,col2, face)
         if face == self.mvcurent[0] or face == self.mvcurent[3]:
             self.mvcentr(cub, mvmain, col1, col2, face)
-            if self.mvcurent[0] != self.mvorig[0]:
-                self.swapside()
+            if self.mvcurent[-2] != self.mvorig[-2]:
+                self.swapside(cub, mvmain, face)
 
-    def swapside(self):
-        pass
+    def swapside(self, cub, mv, face):
+        def appendix(list, cub, mv):
+            for l in list:
+                cub.rotate_by_name(l)
+                mv.append(l)
+        if face == 0:
+            appendix(["F", "U'", "R", "U"], cub, mv)
+        elif face ==2:
+            appendix(["R", "U'", "B", "U"], cub, mv)
+        elif face == 3:
+            appendix(["L", "U'", "F", "U"], cub, mv)
+        elif face == 1:
+            appendix(["B", "U'", "L", "U"], cub, mv)
 
 
     def mvcentr(self, cub, mv, col1, col2, face):
@@ -56,107 +67,60 @@ class stepone():
             if val != None:
                 cub.rotate_by_name(val)
                 mv.append(val)
-            self.mvcurent = edges(cub, col1, col2)
+            self.mvcurent = edges(cub.cub, col1, col2)
 
-        pass
 
-    def update_color(self):
-        pass
+    # def updateFaceColor(self, cubCurrent, colorOne, colorTwo):
+    #     self.listPositionCubCurrent = self.checkerManager.two(cubCurrent, colorOne, colorTwo)
+    #     return self.listPositionCubCurrent[0][0], self.listPositionCubCurrent[1][0]
+    def update_color(self, cub, col1, col2):
+        self.mvcurent=edges(cub.cub, col1, col2)
+        return self.mvcurent[0], self.mvcurent[3]
 
-    def mvdown2(self):
-        pass
-    # def moveDownTwoColor(self, cubCurrent, solveMoveList, colorOne, colorTwo, face):
-    #     faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #
-    #     def moveDownCenter(cubCurrent, solveMoveList, colorOne, colorTwo, face):
-    #         faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #         while (1):
-    #             if (faceOne == face or faceTwo == face):
-    #                 break
-    #             cubCurrent.moveD()
-    #             solveMoveList.append("D")
-    #             faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #
-    #     def optimizationStep(count, solveMoveList, move):
-    #         if (count == 3):
-    #             count = 1
-    #             solveMoveList.append(move + "'")
-    #             return count, 1
-    #         else:
-    #             x = 0
-    #             while (x != count):
-    #                 x += 1
-    #                 solveMoveList.append(move)
-    #         return count, 0
-    #
-    #     count = 0
-    #     if (faceOne == "front" or faceTwo == "front"):
-    #         while (1):
-    #             if (faceOne == "down" or faceTwo == "down"):
-    #                 break
-    #             count += 1
-    #             cubCurrent.moveF()
-    #             faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #         count, flag = optimizationStep(count, solveMoveList, "F")
-    #         moveDownCenter(cubCurrent, solveMoveList, colorOne, colorTwo, face)
-    #         while (count != 0):
-    #             count -= 1
-    #             if (flag == 0):
-    #                 cubCurrent.moveBackF()
-    #                 solveMoveList.append("F'")
-    #             else:
-    #                 cubCurrent.moveF()
-    #                 solveMoveList.append("F")
-    #     elif (faceOne == "left" or faceTwo == "left"):
-    #         while (1):
-    #             if (faceOne == "down" or faceTwo == "down"):
-    #                 break
-    #             count += 1
-    #             cubCurrent.moveL()
-    #             faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #         count, flag = optimizationStep(count, solveMoveList, "L")
-    #         moveDownCenter(cubCurrent, solveMoveList, colorOne, colorTwo, face)
-    #         while (count != 0):
-    #             count -= 1
-    #             if (flag == 0):
-    #                 cubCurrent.moveBackL()
-    #                 solveMoveList.append("L'")
-    #             else:
-    #                 cubCurrent.moveL()
-    #                 solveMoveList.append("L")
-    #
-    #     elif (faceOne == "right" or faceTwo == "right"):
-    #         while (1):
-    #             if (faceOne == "down" or faceTwo == "down"):
-    #                 break
-    #             count += 1
-    #             cubCurrent.moveR()
-    #             faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #         count, flag = optimizationStep(count, solveMoveList, "R")
-    #         moveDownCenter(cubCurrent, solveMoveList, colorOne, colorTwo, face)
-    #         while (count != 0):
-    #             count -= 1
-    #             if (flag == 0):
-    #                 cubCurrent.moveBackR()
-    #                 solveMoveList.append("R'")
-    #             else:
-    #                 cubCurrent.moveR()
-    #                 solveMoveList.append("R")
-    #
-    #     elif (faceOne == "back" or faceTwo == "back"):
-    #         while (1):
-    #             if (faceOne == "down" or faceTwo == "down"):
-    #                 break
-    #             count += 1
-    #             cubCurrent.moveB()
-    #             faceOne, faceTwo = self.updateFaceColor(cubCurrent, colorOne, colorTwo)
-    #         count, flag = optimizationStep(count, solveMoveList, "B")
-    #         moveDownCenter(cubCurrent, solveMoveList, colorOne, colorTwo, face)
-    #         while (count != 0):
-    #             count -= 1
-    #             if (flag == 0):
-    #                 cubCurrent.moveBackB()
-    #                 solveMoveList.append("B'")
-    #             else:
-    #                 cubCurrent.moveB()
-    #                 solveMoveList.append("B")
+    def mvdown2(self, cub, mv, col1, col2, face):
+        f1, f2 = self.update_color(cub, col1, col2)
+
+        def mvdownc(cub, mv, col1, col2, face):
+            f1,f2 = self.update_color(cub, col1, col2)
+            while True:
+                if f1 == face or f2 == face:
+                    break
+                cub.D()
+                mv.append("D")
+                f1, f2 = self.update_color(cub, col1, col2)
+        def optimus(count, mv, el):
+            if count == 3:
+                count = 1
+                mv.append(el + "'")
+                return count, 1
+            else:
+                for i in range(count):
+                    mv.append(el)
+                return count, 0
+
+        def ifrotate(f1,f2, f,cub, mv, col1, col2, face, letera):
+            count = 0
+            while True:
+                if f1==f or f2==f:
+                    break
+                count += 1
+                cub.rotate_by_name(letera)
+                f1, f2 = self.update_color(cub, col1, col2)
+            count, flag = optimus(count, mv, letera)
+            mvdownc(cub, mv, col1, col2, face)
+            for _ in range(count, 0, -1):
+                if flag ==0:
+                    cub.rotate_by_name(letera + "'")
+                    mv.append(letera + "'")
+                else:
+                    cub.rotate_by_name(letera)
+                    mv.append(letera)
+
+        if f1==0 or f2==0:
+            ifrotate(f1,f2,5,cub, mv, col1, col2, face, "F")
+        elif f1 == 3 or f2 == 3:
+            ifrotate(f1,f2,5,cub, mv, col1, col2, face, "L")
+        elif f1 ==2 or f2 ==2:
+            ifrotate(f1,f2,5,cub,mv,col1,col2,face,"R")
+        elif f1 == 1 or f2 == 1:
+            ifrotate(f1,f2,5,cub,mv,col1,col2,face,"B")
