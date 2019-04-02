@@ -34,6 +34,7 @@ class stepone():
             self.rotate(cub, mvmain, 4, 2, 2)
         if not edges_corners_checker(self.origin.cub, cub.cub, 4, 3):
             self.rotate(cub, mvmain, 4, 3, 3)
+        return self.origin
 
     def rotate(self, cub, mvmain, col1, col2, face):
         self.mvcurent = edges(cub.cub, col1, col2)
