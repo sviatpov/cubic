@@ -14,37 +14,38 @@ class rubic():
             c += i
 
         self.slice = np.array([i for i in range(self.size)])
+        self.antis = np.array([i for i in range(self.size -1, -1, -1)])
         self.zero = np.zeros(self.size, dtype='uint8')
         self.last = np.ones(self.size, dtype='uint8') * (-1)
         # print(self.cub)
 
         self.fb = [self._face_([2,5,3,4]),
-                   np.concatenate((self.slice, self.zero, self.slice, self.last)),
-                   np.concatenate((self.zero, self.slice, self.last, self.slice))]
+                   np.concatenate((self.slice, self.zero, self.antis, self.last)),
+                   np.concatenate((self.zero, self.antis, self.last, self.slice))]
         self.fa = [self._face_([4,2,5,3]),
-                   np.concatenate((self.last, self.slice, self.zero, self.slice)),
-                   np.concatenate((self.slice, self.zero, self.slice, self.last))]
+                   np.concatenate((self.last, self.slice, self.zero, self.antis)),
+                   np.concatenate((self.slice, self.zero, self.antis, self.last))]
 
         self.rb = [self._face_([1,5,0,4]),
-                   np.concatenate((self.slice, self.slice, self.slice, self.slice)),
+                   np.concatenate((self.slice, self.antis, self.antis, self.antis)),
                    np.concatenate((self.zero, self.last, self.last, self.last))]
         self.ra = [self._face_([4,1,5,0]),
-                   np.concatenate((self.slice, self.slice, self.slice, self.slice)),
+                   np.concatenate((self.antis, self.slice, self.antis, self.antis)),
                    np.concatenate((self.last, self.zero, self.last, self.last))]
 
         self.lb = [self._face_([0,5,1,4]),
-                   np.concatenate((self.slice, self.slice, self.slice, self.slice)),
+                   np.concatenate((self.slice, self.slice, self.antis, self.slice)),
                    np.concatenate((self.zero, self.zero, self.last, self.zero))]
         self.la = [self._face_([4,0,5,1]),
-                   np.concatenate((self.slice, self.slice, self.slice, self.slice)),
+                   np.concatenate((self.slice, self.slice, self.slice, self.antis)),
                    np.concatenate((self.zero, self.zero, self.zero, self.last))]
 
         self.bb = [self._face_([3,5,2,4]),
-                    np.concatenate((self.slice, self.last, self.slice, self.zero)),
-                    np.concatenate((self.zero, self.slice, self.last, self.slice))]
+                    np.concatenate((self.slice, self.last, self.antis, self.zero)),
+                    np.concatenate((self.zero, self.slice, self.last, self.antis))]
         self.ba = [self._face_([4,3,5,2]),
-                   np.concatenate((self.zero, self.slice, self.last, self.slice )),
-                   np.concatenate((self.slice,self.zero, self.slice, self.last))]
+                   np.concatenate((self.zero, self.slice, self.last, self.antis )),
+                   np.concatenate((self.antis,self.zero, self.slice, self.last))]
 
         self.ub = [self._face_([2,0,3,1]),
                    np.concatenate((self.zero, self.zero, self.zero, self.zero)),
