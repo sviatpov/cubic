@@ -15,7 +15,7 @@ class steptwo():
 
 
     def __init__(self):
-        self.origin = 0
+        self.origin = rubic()
         self.mvcurent = []
         self.mvorig = []
 
