@@ -1,7 +1,9 @@
 from rubic import rubic
 from stepone import stepone
 from steptwo import steptwo
-
+from stepthree import stepthree
+from stepFor import stepfore
+from stepfive import stepfive
 # faces = ['front', 'back', 'right', 'left', 'upper', 'down']
 # numpy = [  0,        1,      2,       3  ,   4  ,       5]
 #colors = ["green", "blue", "red", "orange", "white", "yellow"]
@@ -24,9 +26,24 @@ if __name__ == "__main__":
     # r.rotate_by_name("F'")
     s = stepone()
     s2 = steptwo()
+    s3 = stepthree()
+    s4 = stepfore()
+    s5 = stepfive()
     mv = []
     orig = s.solver(r, mv)
     print(mv)
     s2.solver(r,mv)
 
     print(mv)
+
+    s3.solver(r, mv)
+    print(mv)
+
+    s4.solver(r, mv)
+
+    print(mv)
+
+    s5.solver(r, mv)
+
+    print(mv)
+
