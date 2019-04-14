@@ -13,7 +13,14 @@ class stepthree():
         self.origin = rubic()
         self.mvcurent = []
         self.mvorig = []
-
+        self.pattern1=["D'", "R'", "D", "R", "D", "F", "D'", "F'"]
+        self.pattern2=["D'", "F'", "D", "F", "D", "L", "D'", "L'"]
+        self.pattern3=["D'", "B'", "D", "B", "D", "R", "D'", "R'"]
+        self.pattern4=["D", "R", "D'", "R'", "D'", "B'", "D", "B"]
+        self.pattern5=["D", "L", "D'", "L'", "D'", "F'", "D", "F"]
+        self.pattern6=["D", "B", "D'", "B'", "D'", "L'", "D", "L"]
+        self.pattern7=["D'", "L'", "D", "L", "D", "B", "D'", "B'"]
+        self.pattern8=["D", "F", "D'", "F'", "D'", "R'", "D", "R"]
     def solver(self, cub, mv):
         if not edges_corners_checker(self.origin.cub, cub.cub,0,3):
             self.rot(cub, mv, 0, 3, 0)
@@ -45,39 +52,13 @@ class stepthree():
                 self.mvcurent = edges(cub.cub, col1, col2)
                 self.mv2try(cub, mv, col1,col2)
 
-    # def checkSide(self, cubCurrent, colorsList):
-    #     down, face, colorDown, colorFace = self.getSideParams(cubCurrent, colorsList)
-    #     if (down != "down"):
-    #         return [False, "null"]
-    #     if (face == "front"):
-    #         if (colorDown == "orange" and colorFace == "green"):
-    #             return [True, "leftPattern"]
-    #         elif (colorDown == "red" and colorFace == "green"):
-    #             return [True, "rightPattern"]
-    #     if (face == "back"):
-    #         if (colorDown == "orange" and colorFace == "blue"):
-    #             return [True, "leftPattern"]
-    #         elif (colorDown == "red" and colorFace == "blue"):
-    #             return [True, "rightPattern"]
-    #     if (face == "right"):
-    #         if (colorDown == "blue" and colorFace == "red"):
-    #             return [True, "rightPattern"]
-    #         elif (colorDown == "green" and colorFace == "red"):
-    #             return [True, "leftPattern"]
-    #     if (face == "left"):
-    #         if (colorDown == "green" and colorFace == "orange"):
-    #             return [True, "rightPattern"]
-    #         elif (colorDown == "blue" and colorFace == "orange"):
-    #             return [True, "leftPattern"]
-    #     return [False, "null"]
-
     def todown(self, cub, mv, col1, col2):
         f1, f2, c1, c2 = self.getterofside(cub, col1, col2)
         p = self.ptodown(f1, f2)
         if p == 'RP':
             self.mv2r(cub, mv, f1)
-        elif p == 'RLP':
-            self.mv2r(cub, mv, f1)
+        elif p == 'LP':
+            self.mv2l(cub, mv, f1)
 
     def ptodown(self, f1, f2):
         if f1 == 3:
@@ -138,13 +119,13 @@ class stepthree():
                 cub.rotate_by_name(l)
                 mv.append(l)
         if fc == 0:
-            appendix([ "D'", "R'", "D", "R", "D", "F", "D'", "F'" ], cub, mv)
+            appendix(self.pattern1, cub, mv)
         elif fc == 3:
-            appendix([ "D'", "F'", "D", "F", "D", "L", "D'", "L'" ], cub, mv)
+            appendix(self.pattern2, cub, mv)
         elif fc == 2:
-            appendix([ "D'", "B'", "D", "B", "D", "R", "D'", "R'"], cub, mv)
+            appendix(self.pattern3, cub, mv)
         elif fc == 1:
-            appendix([ "D", "R", "D'", "R'", "D'", "B'", "D", "B" ], cub, mv)
+            appendix(self.pattern4, cub, mv)
 
     def mv2l(self, cub, mv, fc):
         def appendix(list, cub, mv):
@@ -152,20 +133,13 @@ class stepthree():
                 cub.rotate_by_name(l)
                 mv.append(l)
         if fc == 0:
-            appendix([ "D", "L", "D'", "L'", "D'", "F'", "D", "F" ], cub, mv)
+            appendix(self.pattern5, cub, mv)
         elif fc == 3:
-            appendix([ "D", "B", "D'", "B'", "D'", "L'", "D", "L" ], cub, mv)
+            appendix(self.pattern6, cub, mv)
         elif fc == 1:
-            appendix([ "D'", "L'", "D", "L", "D", "B", "D'", "B'" ], cub, mv)
+            appendix(self.pattern7, cub, mv)
         elif fc == 2:
-            appendix([ "D", "F", "D'", "F'", "D'", "R'", "D", "R" ], cub, mv)
-    # def moveToCente(self, cubCurrent, solveMoveList, colorsList, face):
-    #     checkSideList = self.checkSide(cubCurrent, colorsList)
-    #     while (checkSideList[0] == False):
-    #         cubCurrent.moveD()
-    #         solveMoveList.append("D")
-    #         checkSideList = self.checkSide(cubCurrent, colorsList)
-
+            appendix(self.pattern8, cub, mv)
 
     def mv2centr(self, cub, mv, col1, col2):
         chlst = self.chside(cub, col1, col2)

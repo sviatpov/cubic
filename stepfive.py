@@ -10,6 +10,11 @@ class stepfive():
         self.origin = rubic()
         self.mvcurent = []
         self.mvorig = []
+        self.pattern1=["L", "D", "L'", "D", "L", "D2", "L'", "D"]
+        self.pattern4 = ["B", "D", "B'", "D", "B", "D2", "B'", "D"]
+        self.pattern3 = ["F", "D", "F'", "D", "F", "D2", "F'", "D"]
+        self.pattern2=["R", "D", "R'", "D", "R", "D2", "R'", "D"]
+
 
     def solver(self, cub, mv):
         r = self.mv2d(cub, mv)
@@ -47,16 +52,16 @@ class stepfive():
                 cub.rotate_by_name(l)
                 mv.append(l)
         if sd == 0:
-            appendix(["L", "D", "L'", "D", "L", "D2", "L'", "D"], cub, mv)
+            appendix(self.pattern1, cub, mv)
 
         if sd == 1:
-            appendix(["R", "D", "R'", "D", "R", "D2", "R'", "D"], cub, mv)
+            appendix(self.pattern2, cub, mv)
 
         if sd == 2:
-            appendix(["F", "D", "F'", "D", "F", "D2", "F'", "D"], cub, mv)
+            appendix(self.pattern3, cub, mv)
 
         if sd == 3:
-            appendix(["B", "D", "B'", "D", "B", "D2", "B'", "D"], cub, mv)
+            appendix(self.pattern4, cub, mv)
 
 
 

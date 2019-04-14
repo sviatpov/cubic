@@ -13,18 +13,6 @@ class stepone():
         self.mvcurent = []
         self.mvorig = []
 
-    # def edgeMoveTwoColor(self, cubCurrent, solveMoveList, colorOne, colorTwo, face):
-    #     self.listPositionCubCurrent = self.checkerManager.two(cubCurrent, colorOne, colorTwo)
-    #     self.listPositionCubOrigin = self.checkerManager.two(self.cubOrigin, colorOne, colorTwo)
-    #
-    #     if (face != self.listPositionCubCurrent[0][0] and face != self.listPositionCubCurrent[1][0]):
-    #         self.moveDownTwoColor(cubCurrent, solveMoveList, colorOne, colorTwo, face)
-    #
-    #     if (face == self.listPositionCubCurrent[0][0] or face == self.listPositionCubCurrent[1][0]):
-    #         self.moveCenter(cubCurrent, solveMoveList, face, colorOne, colorTwo)
-    #         if (self.listPositionCubCurrent[0][1] != self.listPositionCubOrigin[0][1]):
-    #             self.changeSide(cubCurrent, solveMoveList, face)
-
     def solver(self, cub, mvmain):
         if not edges_corners_checker(self.origin.cub, cub.cub, 4, 0):
             self.rotate(cub, mvmain, 4, 0, 0)
@@ -71,9 +59,6 @@ class stepone():
             self.mvcurent = edges(cub.cub, col1, col2)
 
 
-    # def updateFaceColor(self, cubCurrent, colorOne, colorTwo):
-    #     self.listPositionCubCurrent = self.checkerManager.two(cubCurrent, colorOne, colorTwo)
-    #     return self.listPositionCubCurrent[0][0], self.listPositionCubCurrent[1][0]
     def update_color(self, cub, col1, col2):
         self.mvcurent=edges(cub.cub, col1, col2)
         return self.mvcurent[0], self.mvcurent[3]

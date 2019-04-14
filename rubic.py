@@ -119,12 +119,20 @@ class rubic():
     def D2(self):
         self.D()
         self.D()
-    def mix(self, iter=100):
+    def mix(self, iter=100, change_cub=True):
         comands = [self.F, self.D, self.B, self.R, self.L, self.U,
                    self.F2, self.D2, self.B2, self.R2, self.L2, self.U2,
                    self.Fs, self.Ds, self.Bs, self.Rs,self.Ls, self.Us]
+        in_array = {0:"F",   1:"D",   2:"B",  3:"R",    4:"L", 5:"U",
+                   6:"F2", 7:"D2", 8:"B2", 9:"R2", 10:"L2", 11:"U2",
+                   12:"F'", 13:"D'", 14:"B'", 15:"R'", 16:"L'", 17:"U'"}
+        ret = []
         for i in range(iter):
-            comands[np.random.randint(0, len(comands))]()
+            ran = np.random.randint(0, len(comands))
+            if change_cub:
+                comands[ran]()
+            ret.append(in_array.get(ran))
+        return ret
 
     def rotate_by_name(self, name):
         comands = {"F":self.F, "D":self.D,     "B":self.B,  "R":self.R,    "L":self.L, "U":self.U,
@@ -133,7 +141,9 @@ class rubic():
         f = comands.get(name)
         if f != None:
             f()
-        else:print("FATAL BADNAME FOR ROTATION")
+        else:
+            print("FATAL: BAD NAME FOR ROTATION")
+            exit(1)
 
     def reset(self):
         self.cub = np.zeros((6, self.size, self.size), dtype='uint8')
