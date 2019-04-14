@@ -7,21 +7,38 @@ from edges_corners_checker import edges_corners_checker, edges
 # numpy = [  0,        1,      2,       3  ,   4  ,       5]
 #colors = ["green", "blue", "red", "orange", "white", "yellow"]
 def backcolor(arr, col):
-    if arr[0][1] == col and arr[1][1] == col and arr[1][2] == col and arr[1][0] == col and \
+    if          arr[0][1] == col \
+            and arr[1][1] == col \
+            and arr[1][2] == col \
+            and arr[1][0] == col and \
             arr[2][1] == col:
         return 0, 4
-    elif arr[1][0] == col and arr[1][1] == col and arr[1][2] == col:
+    elif        arr[1][0] == col \
+            and arr[1][1] == col \
+            and arr[1][2] == col:
         return 0, 3
-    elif arr[0][1] == col and arr[1][1] == col and arr[2][1] == col:
-        return 1, 3
-    elif arr[2][1] == col and arr[1][1] == col and arr[1][2] == col:
+
+    elif        arr[2][1] == col \
+            and arr[1][1] == col \
+            and arr[1][2] == col:
         return 0, 2
-    elif arr[1][0] == col and arr[1][1] == col and arr[2][1] == col:
+    elif        arr[0][1] == col \
+            and arr[1][1] == col \
+            and arr[1][2] == col:
+        return 3, 2
+    elif        arr[1][0] == col \
+            and arr[1][1] == col \
+            and arr[2][1] == col:
         return 1,2
-    elif arr[0][1] == col and arr[1][1] == col and arr[1][0] == col:
+    elif        arr[0][1] == col \
+            and arr[1][1] == col \
+            and arr[2][1] == col:
+        return 1, 3
+    elif        arr[0][1] == col \
+            and arr[1][1] == col \
+            and arr[1][0] == col:
         return 2,2
-    elif arr[0][1] == col and arr[1][1] == col and arr[1][2] == col:
-        return 3,2
+
     elif arr[1][1] == col:
         return 0, 1
     return None, None
